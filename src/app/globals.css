@@ -2,25 +2,49 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --surface: #fafaf8;
+  --foreground: #16181b;
+  --muted: #6b7078;
+  --border: #e4e5e0;
+  --accent: #2f6b4f;
+  --accent-foreground: #ffffff;
+  --category-learning: #3c5a8a;
+  --category-net: #7a6a9e;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-category-music: var(--accent);
+  --color-category-learning: var(--category-learning);
+  --color-category-net: var(--category-net);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #121417;
+    --surface: #1a1d20;
+    --foreground: #edeeea;
+    --muted: #8b9099;
+    --border: #2a2e33;
+    --accent: #4f9370;
+    --accent-foreground: #0d120e;
+    --category-learning: #7da0d6;
+    --category-net: #a896ce;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont,
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic UI", "Meiryo",
+    sans-serif;
 }
