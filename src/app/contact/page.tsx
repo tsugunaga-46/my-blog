@@ -1,11 +1,31 @@
-export default function ContactPage() {
+import { submitContact } from "./actions";
+
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ sent?: string; error?: string }>;
+}) {
+  const { sent, error } = await searchParams;
+
   return (
     <div className="max-w-md mx-auto px-6 py-16">
       <h1 className="text-lg font-semibold pb-3 border-b border-border mb-4">お問い合わせ</h1>
       <p className="text-sm text-muted mb-8">
-        送信内容はデータベースに保存される予定です(Phase 05で実装します)。現時点ではフォームの見た目のみです。
+        送信内容はデータベース(PostgreSQL)に保存されます。
       </p>
-      <form className="flex flex-col gap-5">
+
+      {sent && (
+        <p className="mb-6 text-sm border border-accent text-accent rounded-sm px-3 py-2">
+          送信しました。ありがとうございます。
+        </p>
+      )}
+      {error && (
+        <p className="mb-6 text-sm border border-red-700 text-red-700 rounded-sm px-3 py-2">
+          お名前・メールアドレス・メッセージをすべて入力してください。
+        </p>
+      )}
+
+      <form action={submitContact} className="flex flex-col gap-5">
         <div>
           <label htmlFor="name" className="block text-xs text-muted mb-1.5">
             お名前
@@ -44,10 +64,9 @@ export default function ContactPage() {
         </div>
         <button
           type="submit"
-          disabled
-          className="self-start rounded-sm bg-accent text-accent-foreground px-4 py-2 text-sm font-medium opacity-60 cursor-not-allowed"
+          className="self-start rounded-sm bg-accent text-accent-foreground px-4 py-2 text-sm font-medium hover:opacity-90 transition-opacity"
         >
-          送信(準備中)
+          送信する
         </button>
       </form>
     </div>
