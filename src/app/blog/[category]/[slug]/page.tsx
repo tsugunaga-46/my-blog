@@ -1,11 +1,10 @@
 import { notFound } from "next/navigation";
-import { CATEGORY_META, formatDate, getPost, posts, type Category } from "@/lib/posts";
+import { CATEGORY_META, formatDate, getPost, type Category } from "@/lib/posts";
 import { prisma } from "@/lib/prisma";
 import { ViewCounter } from "./ViewCounter";
 
-export function generateStaticParams() {
-  return posts.map((p) => ({ category: p.category, slug: p.slug }));
-}
+// このページは閲覧数をDBからその場で読むため、ビルド時の静的生成(generateStaticParams)は使わず
+// 常にリクエスト時に描画する(SSR)。DBに繋がらないビルド環境でも安全にビルドできる。
 
 export default async function PostPage({
   params,
