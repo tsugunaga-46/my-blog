@@ -9,5 +9,9 @@ echo "== migrate =="
 docker compose run --rm migrate
 echo "== restart app =="
 docker compose up -d app
+echo "== cleanup old images/build cache =="
+docker image prune -af
+docker builder prune -af --filter "until=24h"
 echo "== done =="
 docker compose ps
+df -h /
