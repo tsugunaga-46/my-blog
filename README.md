@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# tsugunaga.dev
 
-## Getting Started
+音楽・未経験エンジニアとしての学習記録・ネット活動を発信する個人ブログ兼ポートフォリオサイトです。
 
-First, run the development server:
+**🔗 公開URL: [https://blog.tsugunaga.dev](https://blog.tsugunaga.dev)**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+自宅のVirtualBox上に立てたUbuntu ServerでDockerコンテナとして動かしており、Cloudflare Tunnelを使うことでルーターのポート開放を一切行わずにインターネット公開しています。
+
+## 構成
+
+```mermaid
+flowchart LR
+    A[Windows PC] -->|VirtualBox| B[Ubuntu Server VM]
+    subgraph B[Ubuntu Server VM]
+        C[Docker: Next.js App]
+        D[Docker: PostgreSQL]
+        E[cloudflared]
+        C --> D
+        C --> E
+    end
+    E -->|outbound only\nポート開放なし| F[Cloudflare Tunnel]
+    F --> G((インターネット))
+    G --> H[blog.tsugunaga.dev]
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 技術スタック
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| レイヤー | 技術 |
+|---|---|
+| フロントエンド | Next.js (App Router) / TypeScript / Tailwind CSS |
+| バックエンド | Next.js Server Actions / Prisma 7 (driver adapter) |
+| データベース | PostgreSQL 16 |
+| インフラ | Docker / Docker Compose / Ubuntu Server 26.04 LTS(VirtualBox) |
+| 公開 | Cloudflare Tunnel(ポート開放不要) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 機能
 
-## Learn More
+- ブログ記事一覧・詳細(カテゴリ: 音楽 / 学習記録 / ネット活動)
+- カテゴリ別フィルタリング
+- お問い合わせフォーム(PostgreSQLに保存)
+- 記事の閲覧数カウンター(DBでリアルタイム集計)
 
-To learn more about Next.js, take a look at the following resources:
+## ローカルでの開発
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm install
+npx prisma generate
+npm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`.env.example` を参考に `.env` を用意し、ローカルのPostgreSQLに接続してください。
 
-## Deploy on Vercel
+## デプロイ
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Ubuntu Server上でDocker Composeを使って以下のように更新します(`deploy.sh` にまとめてあります)。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+git pull
+docker compose build
+docker compose run --rm migrate
+docker compose up -d app
+```
+
+自動復帰(`restart: unless-stopped`)、日次バックアップ、VM自動起動などの運用面も整備済みです。
