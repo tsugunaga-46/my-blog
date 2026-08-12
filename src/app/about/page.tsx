@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const STACK = [
   "Next.js",
   "TypeScript",
@@ -18,36 +20,48 @@ const TIMELINE = [
 export default function AboutPage() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-16">
-      <h1 className="text-lg font-semibold pb-3 border-b border-border mb-8">About</h1>
+      <p className="italic text-accent font-[family-name:var(--font-serif-latin)] text-sm mb-3">
+        Profile
+      </p>
+      <h1 className="font-[family-name:var(--font-serif-jp)] font-bold text-3xl pb-6 border-b border-border mb-10">
+        About
+      </h1>
 
-      <div className="flex gap-4 items-start mb-14">
-        <div className="w-14 h-14 rounded-sm bg-surface border border-border flex items-center justify-center text-accent font-semibold flex-shrink-0">
-          つ
+      <div className="grid sm:grid-cols-[220px_1fr] gap-6 sm:gap-10 items-start mb-16">
+        <div className="border border-border p-2 bg-surface">
+          <Image
+            src="/childhood.jpg"
+            alt="幼少期の写真"
+            width={800}
+            height={600}
+            className="w-full h-auto"
+          />
+          <p className="mt-2 text-center text-xs italic text-muted font-[family-name:var(--font-serif-latin)]">
+            2009, somewhere on a trip
+          </p>
         </div>
         <div>
-          <h2 className="font-semibold">つぐなが(嗣永)</h2>
-          <p className="text-sm text-muted mt-1">
-            28歳 / IT業界2年目 / 独学でエンジニアを目指して学習中
-          </p>
-          <p className="mt-3 text-sm leading-relaxed max-w-md">
-            音楽と、開発の学習記録を発信しています。実演しながら学ぶスタイルが好きで、このサイト自体もその実践の一つです。
+          <h2 className="font-[family-name:var(--font-serif-jp)] font-bold text-xl">つぐなが(嗣永)</h2>
+          <p className="text-sm text-muted mt-1">28歳 / IT業界2年目</p>
+          <p className="mt-4 text-sm leading-relaxed max-w-md">
+            音楽が好きで、日々のことをゆるく書き残しています。最近は少しずつ手を動かしながらエンジニアの勉強もしていて、このサイトもその実践の一つです。実演しながら学ぶスタイルが好きです。
           </p>
         </div>
       </div>
 
-      <h2 className="text-lg font-semibold pb-3 border-b border-border mb-6">使用技術</h2>
+      <h2 className="text-sm tracking-[0.15em] pb-3 border-b border-border mb-6">使用技術</h2>
       <div className="flex flex-wrap gap-2 mb-14">
         {STACK.map((s) => (
           <span
             key={s}
-            className="text-xs border border-border rounded-sm px-2.5 py-1 text-muted"
+            className="text-xs border border-border rounded-sm px-2.5 py-1 text-muted font-[family-name:var(--font-serif-latin)]"
           >
             {s}
           </span>
         ))}
       </div>
 
-      <h2 className="text-lg font-semibold pb-3 border-b border-border mb-6">学習ログ</h2>
+      <h2 className="text-sm tracking-[0.15em] pb-3 border-b border-border mb-6">学習ログ</h2>
       <ol className="border-l border-border pl-5 flex flex-col gap-6">
         {TIMELINE.map((t) => (
           <li key={t.title} className="relative">

@@ -9,7 +9,12 @@ export default async function ContactPage({
 
   return (
     <div className="max-w-md mx-auto px-6 py-16">
-      <h1 className="text-lg font-semibold pb-3 border-b border-border mb-4">お問い合わせ</h1>
+      <p className="italic text-accent font-[family-name:var(--font-serif-latin)] text-sm mb-3">
+        Contact
+      </p>
+      <h1 className="font-[family-name:var(--font-serif-jp)] font-bold text-3xl pb-4 border-b border-border mb-4">
+        お問い合わせ
+      </h1>
       <p className="text-sm text-muted mb-8">
         送信内容はデータベース(PostgreSQL)に保存されます。
       </p>

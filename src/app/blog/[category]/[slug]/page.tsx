@@ -20,12 +20,17 @@ export default async function PostPage({
 
   return (
     <article className="max-w-2xl mx-auto px-6 py-16">
-      <div className="flex items-center gap-3 text-xs text-muted mb-4">
-        <span className={`border rounded-sm px-2 py-0.5 ${meta.className}`}>{meta.label}</span>
+      <p className="italic text-accent font-[family-name:var(--font-serif-latin)] text-sm mb-3">
+        {meta.label}
+      </p>
+      <h1 className="font-[family-name:var(--font-serif-jp)] font-bold text-3xl leading-snug mb-4 text-balance">
+        {post.title}
+      </h1>
+      <div className="flex items-center gap-3 text-xs text-muted mb-10 pb-6 border-b border-border font-[family-name:var(--font-serif-latin)]">
         <span className="tabular-nums">{formatDate(post.date)}</span>
+        <span>·</span>
         <ViewCounter slug={post.slug} initialViews={existing?.count ?? 0} />
       </div>
-      <h1 className="text-2xl font-bold tracking-tight leading-snug mb-8">{post.title}</h1>
       <div className="flex flex-col gap-5 text-[15px] leading-relaxed text-foreground/90">
         {post.body.map((paragraph, i) => (
           <p key={i}>{paragraph}</p>

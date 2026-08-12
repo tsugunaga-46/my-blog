@@ -19,18 +19,23 @@ export default async function BlogPage({
   const sorted = [...filtered].sort((a, b) => (a.date < b.date ? 1 : -1));
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16">
-      <h1 className="text-lg font-semibold pb-3 border-b border-border mb-6">ブログ一覧</h1>
+    <div className="max-w-5xl mx-auto px-6 py-16">
+      <p className="italic text-accent font-[family-name:var(--font-serif-latin)] text-sm mb-3">
+        Archive
+      </p>
+      <h1 className="font-[family-name:var(--font-serif-jp)] font-bold text-3xl mb-8">
+        ブログ一覧
+      </h1>
 
-      <div className="flex flex-wrap gap-2 mb-8 text-sm">
+      <div className="flex flex-wrap gap-x-6 gap-y-2 mb-10 text-xs tracking-[0.1em] font-[family-name:var(--font-serif-latin)]">
         {FILTERS.map((f) => (
           <Link
             key={f.key}
             href={f.key === "all" ? "/blog" : `/blog?category=${f.key}`}
-            className={`rounded-sm border px-3 py-1.5 transition-colors ${
+            className={`pb-1 border-b transition-colors ${
               active === f.key
                 ? "border-accent text-accent"
-                : "border-border text-muted hover:text-foreground"
+                : "border-transparent text-muted hover:text-foreground"
             }`}
           >
             {f.label}
@@ -38,30 +43,40 @@ export default async function BlogPage({
         ))}
       </div>
 
-      <ul className="flex flex-col divide-y divide-border">
-        {sorted.map((post) => {
-          const meta = CATEGORY_META[post.category];
-          return (
-            <li key={post.slug} className="py-4">
-              <Link
-                href={`/blog/${post.category}/${post.slug}`}
-                className="group flex flex-wrap gap-x-4 gap-y-1 items-baseline"
-              >
-                <span className="text-xs text-muted w-20 shrink-0 tabular-nums">
-                  {formatDate(post.date)}
-                </span>
-                <h2 className="font-semibold text-sm group-hover:text-accent transition-colors flex-1 min-w-[200px]">
+      <div className="flex items-baseline justify-between border-b border-border pb-3 mb-2">
+        <span className="text-sm tracking-[0.15em]">ARTICLES</span>
+        <span className="text-xs italic text-muted font-[family-name:var(--font-serif-latin)]">
+          {sorted.length} entries
+        </span>
+      </div>
+
+      {sorted.map((post, i) => {
+        const meta = CATEGORY_META[post.category];
+        return (
+          <Link
+            key={post.slug}
+            href={`/blog/${post.category}/${post.slug}`}
+            className="flex flex-col md:flex-row md:items-start gap-2 md:gap-10 py-6 border-b border-border group"
+          >
+            <div className="flex gap-4 md:w-3/5">
+              <span className="font-[family-name:var(--font-serif-latin)] italic text-accent text-sm pt-0.5">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h2 className="font-[family-name:var(--font-serif-jp)] font-bold text-lg leading-snug group-hover:text-accent transition-colors">
                   {post.title}
                 </h2>
-                <span className={`text-xs border rounded-sm px-2 py-0.5 ${meta.className}`}>
-                  {meta.label}
-                </span>
-                <p className="w-full sm:ml-24 text-sm text-muted">{post.excerpt}</p>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
+                <p className="mt-1.5 text-xs text-muted tabular-nums">
+                  {formatDate(post.date)} — {meta.label}
+                </p>
+              </div>
+            </div>
+            <p className="md:w-2/5 text-sm text-muted leading-relaxed">
+              {post.excerpt}
+            </p>
+          </Link>
+        );
+      })}
     </div>
   );
 }
