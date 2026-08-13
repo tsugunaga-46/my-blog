@@ -23,7 +23,9 @@ export default function Home() {
             好きなことと、日々のこと。
           </h1>
           <p className="mt-6 max-w-md leading-relaxed text-[15px]">
-            好きな音楽の話をしたり、日々のことをぼちぼち書いたり。ゆるく続けているブログです。
+            好きな音楽の話をしたり、日々のことをぼちぼち書いたり。
+            <br />
+            ゆるく続けているブログです。
           </p>
           <div className="mt-7 flex gap-6 text-sm font-[family-name:var(--font-serif-latin)]">
             <Link href="/blog" className="border-b border-foreground pb-0.5">
