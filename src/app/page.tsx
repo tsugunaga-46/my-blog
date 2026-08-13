@@ -23,7 +23,7 @@ export default function Home() {
             好きなことと、日々のこと。
           </h1>
           <p className="mt-6 max-w-md leading-relaxed text-[15px]">
-            音楽制作、未経験からのエンジニア学習、日々のネット活動を記録しているブログです。このサイト自体もその記録の一部として、自宅サーバーで運用しています。
+            好きな音楽の話をしたり、日々のことをぼちぼち書いたり。ゆるく続けているブログです。
           </p>
           <div className="mt-7 flex gap-6 text-sm font-[family-name:var(--font-serif-latin)]">
             <Link href="/blog" className="border-b border-foreground pb-0.5">
