@@ -20,7 +20,7 @@ export default function Home() {
             Personal Log
           </p>
           <h1 className="font-[family-name:var(--font-serif-jp)] font-bold text-4xl md:text-5xl leading-[1.35] text-balance">
-            エンジニアを目指す、学習と制作の記録。
+            好きなことと、日々のこと。
           </h1>
           <p className="mt-6 max-w-md leading-relaxed text-[15px]">
             音楽制作、未経験からのエンジニア学習、日々のネット活動を記録しているブログです。このサイト自体もその記録の一部として、自宅サーバーで運用しています。
