@@ -4,7 +4,7 @@ import { CATEGORY_META, formatDate, posts, type Category } from "@/lib/posts";
 const INDEX_ITEMS: { category: Category; en: string }[] = [
   { category: "music", en: "Music" },
   { category: "learning", en: "Learning" },
-  { category: "net", en: "Net" },
+  { category: "net", en: "Daily" },
 ];
 
 export default function Home() {

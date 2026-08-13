@@ -5,7 +5,7 @@ const FILTERS: { key: "all" | Category; label: string }[] = [
   { key: "all", label: "すべて" },
   { key: "music", label: "音楽" },
   { key: "learning", label: "学習記録" },
-  { key: "net", label: "ネット活動" },
+  { key: "net", label: "日常" },
 ];
 
 export default async function BlogPage({

@@ -3,7 +3,7 @@ export type Category = "music" | "learning" | "net";
 export const CATEGORY_META: Record<Category, { label: string; className: string }> = {
   music: { label: "音楽", className: "text-category-music border-category-music" },
   learning: { label: "学習記録", className: "text-category-learning border-category-learning" },
-  net: { label: "ネット活動", className: "text-category-net border-category-net" },
+  net: { label: "日常", className: "text-category-net border-category-net" },
 };
 
 export type Post = {
