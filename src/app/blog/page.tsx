@@ -50,6 +50,12 @@ export default async function BlogPage({
         </span>
       </div>
 
+      {sorted.length === 0 && (
+        <p className="py-10 text-sm text-muted italic font-[family-name:var(--font-serif-latin)]">
+          No entries yet.
+        </p>
+      )}
+
       {sorted.map((post, i) => {
         const meta = CATEGORY_META[post.category];
         return (
