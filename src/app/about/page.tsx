@@ -27,7 +27,7 @@ export default function AboutPage() {
           <h2 className="font-[family-name:var(--font-serif-jp)] font-bold text-xl">つぐなが(嗣永)</h2>
           <p className="text-sm text-muted mt-1">28歳 / IT業界2年目</p>
           <p className="mt-4 text-sm leading-relaxed max-w-md">
-            音楽が好きで、日々のことをゆるく書き残しています。最近は少しずつ手を動かしながらエンジニアの勉強もしていて、このサイトもその実践の一つです。
+            お酒を飲むことと音楽が好きで、元バンドマンです。近々、音楽活動も再開する予定です。日々のことをゆるく書き残しつつ、最近は少しずつ手を動かしながらエンジニアの勉強もしていて、このサイトもその実践の一つです。
           </p>
         </div>
       </div>
