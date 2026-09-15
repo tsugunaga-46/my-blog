@@ -30,27 +30,29 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <header>
-          <div className="max-w-5xl mx-auto flex items-center justify-between gap-4 px-6 py-6">
+        <div className="site-frame min-h-screen flex flex-col">
+        <header className="site-header">
+          <div className="flex items-center justify-between gap-8 px-6 md:px-10 py-6 md:py-8">
             <Link
               href="/"
-              className="text-xl font-[family-name:var(--font-serif-latin)]"
+              className="site-brand font-[family-name:var(--font-serif-latin)]"
             >
               tsugunaga<span className="italic text-muted">.dev</span>
             </Link>
             <NavLinks />
           </div>
-          <div className="border-b border-border" />
         </header>
 
         <main className="flex-1">{children}</main>
 
-        <footer className="border-t border-border">
-          <div className="max-w-5xl mx-auto px-6 py-6 text-xs text-muted font-[family-name:var(--font-serif-latin)]">
+        <footer className="site-footer">
+          <div className="px-6 md:px-10 py-6 text-xs text-muted font-[family-name:var(--font-serif-latin)]">
             <span>© 2026 tsugunaga.dev</span>
           </div>
         </footer>
+        </div>
       </body>
     </html>
   );
 }
+

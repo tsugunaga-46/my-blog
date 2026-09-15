@@ -14,7 +14,7 @@ export function NavLinks() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex gap-6 text-xs tracking-[0.15em] font-[family-name:var(--font-serif-latin)]">
+    <nav className="site-nav flex gap-4 sm:gap-6 text-xs tracking-[0.15em] font-[family-name:var(--font-serif-latin)]">
       {NAV_LINKS.map((link) => {
         const active = link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
         return (
@@ -34,3 +34,4 @@ export function NavLinks() {
     </nav>
   );
 }
+

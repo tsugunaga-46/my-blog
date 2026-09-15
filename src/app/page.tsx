@@ -13,44 +13,19 @@ export default function Home() {
     .slice(0, 3);
 
   return (
-    <div className="max-w-5xl mx-auto px-6">
-      <section className="grid md:grid-cols-[1fr_auto_18rem] gap-x-10 gap-y-8 py-16 md:py-20">
-        <div>
-          <p className="italic text-accent font-[family-name:var(--font-serif-latin)] text-sm mb-4">
-            Personal Log
-          </p>
-          <h1 className="font-[family-name:var(--font-serif-jp)] font-bold text-4xl md:text-5xl leading-[1.35] text-balance">
-            好きなことと、日々のこと。
-          </h1>
-          <p className="mt-6 max-w-md leading-relaxed text-[15px]">
-            好きな音楽の話をしたり、日々のことをぼちぼち書いたり。
-            <br />
-            ゆるく続けているブログです。
-          </p>
-          <div className="mt-7 flex gap-6 text-sm font-[family-name:var(--font-serif-latin)]">
-            <Link href="/blog" className="border-b border-foreground pb-0.5">
-              記事を読む
-            </Link>
-            <Link href="/about" className="text-muted hover:text-foreground">
-              ABOUT
-            </Link>
-          </div>
-        </div>
-
-        <div className="hidden md:block w-px bg-border" />
-
-        <div>
-          <p className="text-xs tracking-[0.2em] text-muted font-[family-name:var(--font-serif-latin)] mb-4">
+    <div className="home-layout">
+      <aside className="home-index">
+          <p className="index-label text-xs tracking-[0.2em] text-muted font-[family-name:var(--font-serif-latin)]">
             INDEX
           </p>
-          <ul className="flex flex-col">
+          <ul className="index-list">
             {INDEX_ITEMS.map((item) => {
               const meta = CATEGORY_META[item.category];
               return (
-                <li key={item.category} className="border-b border-border">
+                <li key={item.category}>
                   <Link
                     href={`/blog?category=${item.category}`}
-                    className="flex items-baseline justify-between py-3 group"
+                    className="flex items-baseline justify-between gap-3 py-3 group"
                   >
                     <span className="group-hover:text-accent transition-colors">
                       {meta.label}
@@ -63,14 +38,42 @@ export default function Home() {
               );
             })}
           </ul>
-          <p className="mt-6 italic text-xs text-muted font-[family-name:var(--font-serif-latin)]">
+          <p className="home-note italic text-xs text-muted font-[family-name:var(--font-serif-latin)]">
             Recorded at home, served from home.
           </p>
-        </div>
-      </section>
+      </aside>
 
-      <section className="pb-24">
-        <div className="flex items-baseline justify-between border-b border-border pb-3 mb-2">
+      <div className="home-content">
+        <section className="home-hero">
+          <div>
+            <p className="italic text-accent font-[family-name:var(--font-serif-latin)] text-sm mb-4 tracking-[0.16em]">
+              Personal Log
+            </p>
+            <h1 className="home-title font-[family-name:var(--font-serif-jp)] font-bold text-balance">
+              好きなことと、日々のこと。
+            </h1>
+            <p className="home-intro">
+              好きな音楽の話をしたり、日々のことをぼちぼち書いたり。
+              <br />
+              ゆるく続けているブログです。
+            </p>
+            <div className="mt-7 flex gap-6 text-sm font-[family-name:var(--font-serif-latin)]">
+              <Link href="/blog" className="border-b border-foreground pb-0.5">
+                記事を読む
+              </Link>
+              <Link href="/about" className="text-muted hover:text-foreground">
+                ABOUT
+              </Link>
+            </div>
+          </div>
+          <div className="home-folio" aria-hidden="true">
+            <span>{String(latest.length).padStart(2, "0")}</span>
+            <em>tsugunaga.dev</em>
+          </div>
+        </section>
+
+      <section className="latest-section">
+        <div className="latest-heading flex items-baseline justify-between border-b border-border pb-3">
           <h2 className="text-sm tracking-[0.15em]">最新の記録</h2>
           <span className="text-xs italic text-muted font-[family-name:var(--font-serif-latin)]">
             {latest.length} entries
@@ -82,28 +85,29 @@ export default function Home() {
             <Link
               key={post.slug}
               href={`/blog/${post.category}/${post.slug}`}
-              className="flex flex-col md:flex-row md:items-start gap-2 md:gap-10 py-6 border-b border-border group"
+              className="post-row group"
             >
-              <div className="flex gap-4 md:w-3/5">
-                <span className="font-[family-name:var(--font-serif-latin)] italic text-accent text-sm pt-0.5">
+              <span className="post-number font-[family-name:var(--font-serif-latin)] italic text-accent text-sm">
                   {String(i + 1).padStart(2, "0")}
-                </span>
-                <div>
+              </span>
+              <div className="post-title-block">
                   <h3 className="font-[family-name:var(--font-serif-jp)] font-bold text-lg leading-snug group-hover:text-accent transition-colors">
                     {post.title}
                   </h3>
                   <p className="mt-1.5 text-xs text-muted tabular-nums">
                     {formatDate(post.date)} — {meta.label}
                   </p>
-                </div>
               </div>
-              <p className="md:w-2/5 text-sm text-muted leading-relaxed">
+              <p className="post-excerpt text-sm text-muted leading-relaxed">
                 {post.excerpt}
               </p>
+              <span className="post-arrow" aria-hidden="true">→</span>
             </Link>
           );
         })}
       </section>
+      </div>
     </div>
   );
 }
+
