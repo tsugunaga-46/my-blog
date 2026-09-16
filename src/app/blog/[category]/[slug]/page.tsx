@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { CATEGORY_META, formatDate, getPost, type Category } from "@/lib/posts";
-import { prisma } from "@/lib/prisma";
+import { getPostViews } from "@/lib/db";
 import { ViewCounter } from "./ViewCounter";
 
 // このページは閲覧数をDBからその場で読むため、ビルド時の静的生成(generateStaticParams)は使わず
@@ -16,7 +16,7 @@ export default async function PostPage({
   if (!post) notFound();
 
   const meta = CATEGORY_META[post.category];
-  const existing = await prisma.postView.findUnique({ where: { slug: post.slug } });
+  const initialViews = await getPostViews(post.slug);
 
   return (
     <article className="max-w-2xl mx-auto px-6 py-16">
@@ -29,7 +29,7 @@ export default async function PostPage({
       <div className="flex items-center gap-3 text-xs text-muted mb-10 pb-6 border-b border-border font-[family-name:var(--font-serif-latin)]">
         <span className="tabular-nums">{formatDate(post.date)}</span>
         <span>·</span>
-        <ViewCounter slug={post.slug} initialViews={existing?.count ?? 0} />
+        <ViewCounter slug={post.slug} initialViews={initialViews} />
       </div>
       <div className="flex flex-col gap-5 text-[15px] leading-relaxed text-foreground/90">
         {post.body.map((paragraph, i) => (

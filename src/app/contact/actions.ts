@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/prisma";
+import { createContactMessage } from "@/lib/db";
 
 export async function submitContact(formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
@@ -12,7 +12,7 @@ export async function submitContact(formData: FormData) {
     redirect("/contact?error=missing");
   }
 
-  await prisma.contactMessage.create({ data: { name, email, message } });
+  await createContactMessage({ name, email, message });
 
   redirect("/contact?sent=1");
 }

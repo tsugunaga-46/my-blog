@@ -4,23 +4,16 @@
 
 **🔗 公開URL: [https://blog.tsugunaga.dev](https://blog.tsugunaga.dev)**
 
-自宅のVirtualBox上に立てたUbuntu ServerでDockerコンテナとして動かしており、Cloudflare Tunnelを使うことでルーターのポート開放を一切行わずにインターネット公開しています。
+Cloudflare WorkersでNext.jsを動かし、問い合わせ内容と閲覧数はCloudflare D1に保存します。自宅PCやVMを起動しておく必要はありません。
 
 ## 構成
 
 ```mermaid
 flowchart LR
-    A[Windows PC] -->|VirtualBox| B[Ubuntu Server VM]
-    subgraph B[Ubuntu Server VM]
-        C[Docker: Next.js App]
-        D[Docker: PostgreSQL]
-        E[cloudflared]
-        C --> D
-        C --> E
-    end
-    E -->|outbound only\nポート開放なし| F[Cloudflare Tunnel]
-    F --> G((インターネット))
-    G --> H[blog.tsugunaga.dev]
+    A[GitHub] -->|deploy| B[Cloudflare Workers]
+    B --> C[Cloudflare D1]
+    D((インターネット)) --> B
+    B --> E[blog.tsugunaga.dev]
 ```
 
 ## 技術スタック
@@ -28,37 +21,36 @@ flowchart LR
 | レイヤー | 技術 |
 |---|---|
 | フロントエンド | Next.js (App Router) / TypeScript / Tailwind CSS |
-| バックエンド | Next.js Server Actions / Prisma 7 (driver adapter) |
-| データベース | PostgreSQL 16 |
-| インフラ | Docker / Docker Compose / Ubuntu Server 26.04 LTS(VirtualBox) |
-| 公開 | Cloudflare Tunnel(ポート開放不要) |
+| バックエンド | Next.js Server Actions / vinext |
+| データベース | Cloudflare D1 |
+| インフラ | Cloudflare Workers |
+| 公開 | Cloudflare Custom Domain |
 
 ## 機能
 
 - ブログ記事一覧・詳細(カテゴリ: 音楽 / 学習記録 / ネット活動)
 - カテゴリ別フィルタリング
-- お問い合わせフォーム(PostgreSQLに保存)
+- お問い合わせフォーム(D1に保存)
 - 記事の閲覧数カウンター(DBでリアルタイム集計)
 
 ## ローカルでの開発
 
 ```bash
 npm install
-npx prisma generate
-npm run dev
+npm run db:migrate:local
+npm run dev:vinext
 ```
 
-`.env.example` を参考に `.env` を用意し、ローカルのPostgreSQLに接続してください。
+ローカルD1はWranglerが自動的に管理します。
 
 ## デプロイ
 
-Ubuntu Server上でDocker Composeを使って以下のように更新します(`deploy.sh` にまとめてあります)。
+最初にD1データベースを作成し、`wrangler.jsonc`の`database_id`を更新します。
 
 ```bash
-git pull
-docker compose build
-docker compose run --rm migrate
-docker compose up -d app
+npx wrangler d1 create my-blog-db
+npm run db:migrate:remote
+npm run deploy:vinext
 ```
 
-自動復帰(`restart: unless-stopped`)、日次バックアップ、VM自動起動などの運用面も整備済みです。
+公開後はCloudflare WorkersのCustom Domainに`blog.tsugunaga.dev`を登録します。

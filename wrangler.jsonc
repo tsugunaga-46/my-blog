@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "my-portfolio",
+  "compatibility_date": "2026-09-16",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "main": "vinext/server/fetch-handler",
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "preview-blog.tsugunaga.dev",
+      "custom_domain": true
+    },
+    {
+      "pattern": "blog.tsugunaga.dev/*",
+      "zone_name": "tsugunaga.dev"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "my-blog-db",
+      "database_id": "4f9a3a8f-3ea3-4d4a-92df-a65c9431514a",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "assets": {
+    "directory": "dist/client",
+    "not_found_handling": "none",
+    "binding": "ASSETS"
+  }
+}
