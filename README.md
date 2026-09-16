@@ -10,10 +10,11 @@ Cloudflare WorkersでNext.jsを動かし、問い合わせ内容と閲覧数はC
 
 ```mermaid
 flowchart LR
-    A[GitHub] -->|deploy| B[Cloudflare Workers]
-    B --> C[Cloudflare D1]
-    D((インターネット)) --> B
-    B --> E[blog.tsugunaga.dev]
+    A[GitHub] -->|clone / pull| B[ローカル環境]
+    B -->|npm run deploy:vinext| C[Cloudflare Workers]
+    C --> D[Cloudflare D1]
+    E((インターネット)) --> C
+    C --> F[blog.tsugunaga.dev]
 ```
 
 ## 技術スタック
@@ -24,7 +25,7 @@ flowchart LR
 | バックエンド | Next.js Server Actions / vinext |
 | データベース | Cloudflare D1 |
 | インフラ | Cloudflare Workers |
-| 公開 | Cloudflare Custom Domain |
+| 公開 | Cloudflare Workers Route |
 
 ## 機能
 
@@ -53,4 +54,10 @@ npm run db:migrate:remote
 npm run deploy:vinext
 ```
 
-公開後はCloudflare WorkersのCustom Domainに`blog.tsugunaga.dev`を登録します。
+`wrangler.jsonc`では、既存のCloudflareプロキシDNSを残したまま
+`blog.tsugunaga.dev/*`をWorkers Routeへ割り当てています。通常の更新は
+次のコマンドだけで反映できます。
+
+```bash
+npm run deploy:vinext
+```
